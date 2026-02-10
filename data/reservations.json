@@ -1,0 +1,22 @@
+[
+  {
+    "id": "r_1770693001602",
+    "businessId": "seadog",
+    "tripId": 1,
+    "trip": "8:30 AM Snorkel Tour",
+    "date": "2026-02-08",
+    "qty": 2,
+    "type": "public",
+    "paymentMethod": "cash",
+    "totals": {
+      "qty": 2,
+      "pricePerPersonCash": 80,
+      "pricePerPersonCard": 84,
+      "subtotal": 160,
+      "processingFee": 0,
+      "tax": 0,
+      "total": 160
+    },
+    "createdAt": "2026-02-10T03:10:01.602Z"
+  }
+]

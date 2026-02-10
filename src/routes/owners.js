@@ -1,27 +1,38 @@
 const express = require("express");
 const router = express.Router();
 
-const bookingsRoutes = require("./bookings");
+const { readBookings } = require("../models/bookingsStore");
 
-// GET /api/owners/:ownerId/bookings
+/**
+ * TEMP owner -> businesses map (we’ll move this to a real store later)
+ * ownerId in URL: /api/owners/:ownerId/bookings
+ */
+const OWNER_BUSINESSES = {
+  stetson: ["seadog", "islandtime"],
+  // add more owners later:
+  // buddy: ["seadog"],
+};
+
+/**
+ * GET /api/owners/:ownerId/bookings
+ * Example: /api/owners/stetson/bookings
+ */
 router.get("/:ownerId/bookings", (req, res) => {
   const { ownerId } = req.params;
 
-  // temporary owner → business mapping
-  const ownerToBusiness = {
-    stetson: "seadog",
-    mike: "islandtime",
-  };
+  const businessIds = OWNER_BUSINESSES[ownerId];
 
-  const businessId = ownerToBusiness[ownerId];
-
-  if (!businessId) {
+  if (!businessIds) {
     return res.status(404).json({ error: "Owner not found" });
   }
 
-  const allBookings = bookingsRoutes._getAll();
-  const bookings = allBookings.filter((b) => b.businessId === businessId);
+  const allBookings = readBookings();
 
-  res.json({ bookings });
+  const bookings = allBookings.filter((b) =>
+    businessIds.includes(b.businessId),
+  );
+
+  return res.json({ ownerId, businessIds, bookings });
 });
+
 module.exports = router;
