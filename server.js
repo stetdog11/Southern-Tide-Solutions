@@ -1,5 +1,13 @@
 const express = require("express");
+const bookingsRoutes = require("./src/routes/bookings");
+const ownersRoutes = require("./src/routes/owners");
+
 const app = express();
+app.use(express.json());
+app.use(express.static("public"));
+
+app.use("/api/bookings", bookingsRoutes);
+app.use("/api/owners", ownersRoutes);
 
 const PORT = process.env.PORT || 3000;
 
